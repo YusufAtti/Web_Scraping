@@ -1,0 +1,105 @@
+﻿@model Article
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Article Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        a {
+            text-decoration: none; /* Üstü çiziliyi kaldırır */
+            color: inherit; /* Mavi rengi kaldırır ve bağlantının etrafındaki renklerin varsayılan değerlerini kullanır */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.ArticleName</h1>
+            </div>
+            <div class="card-body">
+                @if (Model.Authors != null && Model.Authors.Any())
+                {
+                    <h2>Authors</h2>
+                    <ul>
+                        @foreach (var author in Model.Authors)
+                        {
+                            <li>@author</li>
+                        }
+                    </ul>
+                }
+                @if (!string.IsNullOrEmpty(Model.PubType))
+                {
+                    <h2>Publication Type</h2>
+                    <p>@Model.PubType</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.PublishDate))
+                {
+                    <h2>Publish Date</h2>
+                    <p>@Model.PublishDate</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.PublisherName))
+                {
+                    <h2>Publisher Name</h2>
+                    <p>@Model.PublisherName</p>
+                }
+                @if (Model.KeywordsForSearch != null && Model.KeywordsForSearch.Any())
+                {
+                    <h2>Keywords for Search</h2>
+                    <ul>
+                        @foreach (var keyword in Model.KeywordsForSearch)
+                        {
+                            <li>@keyword</li>
+                        }
+                    </ul>
+                }
+                @if (Model.KeywordsForArticle != null && Model.KeywordsForArticle.Any())
+                {
+                    <h2>Keywords for Article</h2>
+                    <ul>
+                        @foreach (var keyword in Model.KeywordsForArticle)
+                        {
+                            <li>@keyword</li>
+                        }
+                    </ul>
+                }
+                @if (!string.IsNullOrEmpty(Model.Summary))
+                {
+                    <h2>Summary</h2>
+                    <p>@Model.Summary</p>
+                }
+                @if (Model.References != null && Model.References.Any())
+                {
+                    <h2>References</h2>
+                    <ul>
+                        @foreach (var reference in Model.References)
+                        {
+                            <li>@reference</li>
+                        }
+                    </ul>
+                }
+                @if (Model.QuotationCount > 0)
+                {
+                    <h2>Quotation Count</h2>
+                    <p>@Model.QuotationCount</p>
+                }
+                @if (Model.DoiNumber > 0)
+                {
+                    <h2>DOI Number</h2>
+                    <p>@Model.DoiNumber</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.ArticleUrl))
+                {
+                    <h2>Article URL</h2>
+                    <p>@Model.ArticleUrl</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

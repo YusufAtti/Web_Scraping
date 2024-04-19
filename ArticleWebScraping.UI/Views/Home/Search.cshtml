@@ -1,0 +1,124 @@
+﻿@model List<Article>
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arama Arayüzü</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none; 
+            color: inherit; 
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-title {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: calc(100% - 100px); /* Arama kutusunu ve düğmeyi yan yana sığdırmak için genişlik ayarı */
+            box-sizing: border-box;
+        }
+
+        .search-button {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px; /* Arama düğmesinin sabit genişliği */
+            box-sizing: border-box;
+        }
+
+        .article {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+            .article h5 {
+                margin-top: 0;
+                margin-bottom: 10px; 
+            }
+
+            .article p {
+                margin-bottom: 0;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="search-title">AydınPedia</h2>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <div style="display: flex; align-items: baseline;">
+                <!-- Kutuları yatayda hizalama -->
+                <input type="text" class="search-box" name="searchTerm" placeholder="Search...">
+                <button type="submit" class="search-button">Search</button>
+            </div>
+        }
+        <a href="/Home/Listele?q=yakin" class="btn btn-primary btn-sm">En Çok Referans Sayısından</a>
+        <a href="/Home/Listele?q=uzak" class="btn btn-primary btn-sm">En Az Referans Sayısından</a>
+    </div>
+
+    <div class="container">
+
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var article in Model)
+            {
+                if (article.ArticleName != "")
+                {
+                    <div class="article">
+                        <a href="/Home/Page?url=@article.ArticleUrl"><h2>@article.ArticleName</h2></a>
+                        <span>@article.Summary</span>
+                        <br />
+                        @foreach (var item in article.KeywordsForArticle)
+                        {
+                            <a href="/Home/Search?searchTerm=@item" class="btn btn-primary btn-sm">@item</a>
+                        }
+                        <br />
+                        Yayın Tarihi : @article.PublishDate
+                        <br />
+                        Referans Sayısı : @article.QuotationCount
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <p>No articles found.</p>
+        }
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
